@@ -1,11 +1,11 @@
 let createBoard = document.querySelector('.board');
-let displayListItem = document.querySelector('.display-list');
 let listBtn = document.querySelector('.list-btn');
 let form = document.querySelector('.form');
 let ulList = document.querySelector('.input-list');
-let ul = document.querySelector('ul');
+let ul = document.querySelector('section');
 let ol = document.querySelector('ol');
-let edit = document.querySelector('.edit-btn')
+let edit = document.querySelector('.edit-btn');
+
 
 // Board starts here
 
@@ -44,9 +44,10 @@ class List extends Board {
     displayItem.innerHTML += items.map((element, i) => {
       return `
         <div class="todo" data-id="${i}">
-          <div>${this.arrList[i].inputName}</div>
+        <div>${this.arrList[i].inputName}</div>
           <input type="text" data-id="${i}" placeholder="Add a card ..." class="card-input" id="x"></input>
           <button class="card-btn" data-id="${i}">Submit</button>
+          <div class="card-div"></div>
         </div>
       `
     }).join('');
@@ -61,22 +62,29 @@ class Card extends List {
     this.cardName = cardName;
     this.todoList = [];
   }
-  createToDo() {
-    if (!(document.querySelector('.card-input')).value) return;
+  createToDo(e) {
     ol.innerHTML = '';
-    const todoValue = (document.querySelector('.card-input')).value;
-    let todoItem = {
-      todoValue,
+    let todoItem;
+    const id = e.target.dataset.id;
+    let value = '';
+    const todoValue = document.querySelectorAll('.card-input');
+    todoValue.forEach(t => {
+      if(t.dataset.id === id) {
+        value = t
+      }
+      if (!t) return;
+    })
+    todoItem = {
+      todoValue : value.value,
       done: false
     }
     this.todoList.push(todoItem);
     this.displayToDo(this.todoList, ol);
-    (document.querySelector('.card-input')).value = '';
   }
   displayToDo(lists = [], itemsList) {
     itemsList.innerHTML += lists.map((ele, i) => {
       return `
-        <li class="todolist-item" data-id="${i}">${this.todoList[i].todoValue}</li>
+        <li class="todolist-item" data-id="${i}">${lists[i].todoValue}</li>
         <button class="edit-btn" id="edit" data-id="${i}">Edit</button>
         <button class="delete-btn" id="delete" data-id="${i}">Delete</button>
       `
@@ -116,7 +124,7 @@ console.log(b1);
 
 form.addEventListener('click', function(e) {
   e.preventDefault();
-  if(e.target.classList.contains('list-btn')) {
+  if (e.target.classList.contains('list-btn')) {
     b1.createList();
     b1.displayList(this.arrList, ul);
   }
@@ -125,7 +133,9 @@ form.addEventListener('click', function(e) {
 ul.addEventListener('click', function(e) {
   e.preventDefault();
   if (e.target.classList.contains('card-btn')) {
-    b1.createToDo();
+    b1.createToDo(e);
+    let id = e.target.dataset.id;
+    console.log(id);
   }
 })
 
