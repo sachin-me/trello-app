@@ -1,4 +1,7 @@
-div, form, ol, ul {
-	display: inline-block;
+div, form, ol, ul, section {
+  display: inline-block;
+}
+li {
+  list-style: none;
 }
 

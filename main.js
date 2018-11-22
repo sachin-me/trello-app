@@ -29,7 +29,6 @@ class List extends Board {
   }
   createList() {
     ul.innerHTML = '';
-    console.log('createList')
     const inputName = (document.querySelector('.input-list')).value;
     let listContainer = {
       inputName,
@@ -44,7 +43,7 @@ class List extends Board {
     displayItem.innerHTML += items.map((element, i) => {
       return `
         <div class="todo" data-id="${i}">
-        <div>${this.arrList[i].inputName}</div>
+          <div>${this.arrList[i].inputName}</div>
           <input type="text" data-id="${i}" placeholder="Add a card ..." class="card-input" id="x"></input>
           <button class="card-btn" data-id="${i}">Submit</button>
           <div class="card-div"></div>
@@ -63,7 +62,6 @@ class Card extends List {
     this.todoList = [];
   }
   createToDo(e) {
-    ol.innerHTML = '';
     let todoItem;
     const id = e.target.dataset.id;
     let value = '';
@@ -72,23 +70,29 @@ class Card extends List {
       if(t.dataset.id === id) {
         value = t
       }
-      if (!t) return;
     })
     todoItem = {
       todoValue : value.value,
       done: false
     }
+    if(!(todoItem.todoValue)) return;
     this.todoList.push(todoItem);
-    this.displayToDo(this.todoList, ol);
+    this.displayToDo(this.todoList);
   }
-  displayToDo(lists = [], itemsList) {
-    itemsList.innerHTML += lists.map((ele, i) => {
-      return `
-        <li class="todolist-item" data-id="${i}">${lists[i].todoValue}</li>
-        <button class="edit-btn" id="edit" data-id="${i}">Edit</button>
-        <button class="delete-btn" id="delete" data-id="${i}">Delete</button>
-      `
-    }).join('');
+  displayToDo(lists = []) {
+    let todoDiv = document.querySelectorAll('.todo');
+    todoDiv.forEach((v, i) => {
+      console.log(v);
+      let cardLi = document.createElement('li');
+      cardLi.innerHTML = lists.map((ele, i) => {
+        return `
+          <li class="todolist-item" data-id="${i}">${ele.todoValue}</li>
+          <button class="edit-btn" id="edit" data-id="${i}">Edit</button>
+          <button class="delete-btn" id="delete" data-id="${i}">Delete</button>
+        `
+      }).join('');
+      v.appendChild(cardLi);
+    })
   }
   // editList(e) {
   //   console.log(e);
