@@ -2,18 +2,13 @@
 //   constructor(title) {
 //     this.title = title;
 //     this.boardsArr = [];
-//     this.boardsNode = document.querySelector('#main');
-//     this.boardsChild = document.createElement('div');
-//     this.boardsTitle = document.createElement('h2');
-//     this.boardsTitle.innerText = title;
-//     this.boardsChild.appendChild(this.boardsTitle);
+//     this.node = document.createElement('div');
+//     this.titleNode = document.createElement('h2');
 //   }
 //   render() {
+//     this.titleNode.innerText = this.title;
+//     this.node.appendChild(this.boardsTitle);
 //     this.boardsNode.appendChild(this.boardsChild);
 //     this.boardsArr.push(this.boardsChild);
 //   }
 // }
-
-// let b1 = new Boards('Create a new board');
-// b1.render();
-// console.log(b1);

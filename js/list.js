@@ -11,7 +11,12 @@ class List {
     this.node.appendChild(this.titleNode);
 
     this.cardNodes = createNode('div');
-    this.cardNodes.classList.add('cards')
+    this.cardNodes.classList.add('cards');
+
+    let id = 0;
+    this.getNextId = function() {
+      return id++;
+    }
 
     if (!dummyList) {
       this.cards = [new Card(this, 'Add new card...')];
@@ -24,6 +29,8 @@ class List {
       })
       this.node.appendChild(this.cardNodes);
       this.cards[this.cards.length - 1].node.addEventListener('click', () => addCard(this));
+      this.cardNodes.addEventListener("click", deleteBtn);
+      this.cardNodes.addEventListener("click", editBtn);
     }
   }
 }
