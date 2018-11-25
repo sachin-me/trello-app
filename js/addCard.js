@@ -43,13 +43,14 @@ function editBtn(e) {
         const editVal = document.querySelector('.editValue')
         console.log(editVal);
         let editCard = editVal.value;
-        let editCardValue = `
-          ${editCard}
-          <button class="delete-btn">Delete</button>
-          <button class="edit-btn">Edit</button>
-        `;
-        item.innerHTML = editCardValue;
-        if(!editVal.value) return;
+        if (editCard) {
+          let editCardValue = `
+            ${editCard}
+            <button class="delete-btn">Delete</button>
+            <button class="edit-btn">Edit</button>
+          `;
+          item.innerHTML = editCardValue;
+        }
       }
     })
     console.log(item);
